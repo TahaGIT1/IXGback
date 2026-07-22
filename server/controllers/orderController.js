@@ -243,6 +243,7 @@ export const verifyPayment = async (req, res) => {
       message: "Payment verified successfully.",
       registration,
     });
+    console.log("➡ About to call sendConfirmationEmail");
 
     console.log("1️⃣3️⃣ Response sent");
 
@@ -252,6 +253,7 @@ export const verifyPayment = async (req, res) => {
     registration.name,
     run
   );
+  console.log("✅ sendConfirmationEmail finished");
 
   console.log("✅ Email sent successfully");
 } catch (err) {
