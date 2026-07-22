@@ -246,18 +246,18 @@ export const verifyPayment = async (req, res) => {
 
     console.log("1️⃣3️⃣ Response sent");
 
-    sendConfirmationEmail(
-      registration.email,
-      registration.name,
-      run
-    )
-      .then(() => {
-        console.log("✅ Email sent successfully");
-      })
-      .catch((err) => {
-        console.error("❌ Email failed");
-        console.error(err);
-      });
+   try {
+  await sendConfirmationEmail(
+    registration.email,
+    registration.name,
+    run
+  );
+
+  console.log("✅ Email sent successfully");
+} catch (err) {
+  console.error("❌ Email failed");
+  console.error(err);
+}
 
     console.log("========== VERIFY PAYMENT END ==========");
   } catch (error) {
