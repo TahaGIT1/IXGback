@@ -7,31 +7,31 @@ export default function FAQ() {
     {
       question: "Do I need to be fit to join?",
       answer:
-        "Absolutely not. IXG welcomes complete beginners. Our community runs are designed so everyone can participate comfortably.",
+        "Absolutely not. IXG welcomes complete beginners. Our community runs are designed so everyone can participate comfortably",
     },
     {
       question: "Is it free to join?",
       answer:
-        "Yes. Community runs are completely free unless otherwise mentioned for special events.",
+        "A registration fee is necessary to join",
     },
     {
       question: "How far do you run?",
       answer:
-        "Most beginner runs are around 4 KM at an easy conversational pace.",
+        "Most beginner runs are around 4 KM at an easy conversational pace",
     },
     {
       question: "Can beginners join?",
       answer:
-        "Definitely. Many of our members started their running journey with IXG.",
+        "Definitely. Many of our members started their running journey with IXG",
     },
     {
       question: "What should I bring?",
-      answer: "Comfortable running shoes, water, and a positive attitude.",
+      answer: "Comfortable running shoes, water, and a positive attitude",
     },
     {
       question: "Do I need to register?",
       answer:
-        "Registration is recommended so we know how many runners to expect.",
+        "Registration is necessary so we know how many runners to expect",
     },
   ];
 

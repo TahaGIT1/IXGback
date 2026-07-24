@@ -230,7 +230,7 @@ const sizes = ["S", "M", "L", "XL"];
 </div>
 
             <p className="mt-6 text-3xl font-extrabold text-gray-900">
-              ₹599
+              ₹799
             </p>
             <div className="mt-8">
   <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500">
@@ -359,7 +359,7 @@ const sizes = ["S", "M", "L", "XL"];
         <div className="mt-3 flex justify-between text-xl font-bold">
           <span>Total</span>
 
-          <span>₹599</span>
+          <span>₹799</span>
         </div>
       </div>
 <div className="mt-8 space-y-4">
@@ -456,7 +456,7 @@ const sizes = ["S", "M", "L", "XL"];
         <div className="mt-3 flex justify-between">
           <span className="text-gray-500">Amount</span>
           <span className="font-bold">
-            ₹599
+            ₹799
           </span>
         </div>
 

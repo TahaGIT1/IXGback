@@ -7,7 +7,7 @@ export default function Footer() {
     { name: "Runs", href: "#runs" },
     { name: "Gallery", href: "#gallery" },
     { name: "Merchandise", href: "#merchandise" },
-    { name: "Partners", href: "#sponsors" },
+    { name: "Brands that ran with us", href: "#sponsors" },
   ];
 
   const communityLinks = [

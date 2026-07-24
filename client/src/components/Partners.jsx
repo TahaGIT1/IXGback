@@ -5,6 +5,7 @@ import dakshinLogo from "../assets/partners/dakshin.png";
 import abristaLogo from "../assets/partners/abrista.png";
 import paistryLogo from "../assets/partners/paistry.png";
 import magnetaLogo from "../assets/partners/magneta.png";
+import thyme from "../assets/partners/thyme.png";
 
 export default function Partners() {
   const partners = [
@@ -25,8 +26,12 @@ export default function Partners() {
       logo: paistryLogo,
     },
     {
-      name: "Magneta Ice Creams",
+      name: "MagCafe",
       logo: magnetaLogo,
+    },
+    {
+      name: "Thyme & Whisk",
+      logo: thyme,
     },
   ];
 
@@ -69,7 +74,7 @@ export default function Partners() {
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-800/10 px-4 py-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
             <span className="text-xs font-semibold uppercase tracking-widest text-blue-600">
-              Community Partners
+              Collabaration Partners
             </span>
           </div>
 
@@ -78,7 +83,7 @@ export default function Partners() {
           </h2>
 
           <p className="mt-4 text-base leading-relaxed text-gray-500 sm:text-lg">
-            These local businesses have supported IXG Run Club by sponsoring
+            These local businesses have supported IXG Run Club by collabarating with
             community runs, experiences and giveaways. Their support helps us
             build a stronger running community in Belagavi.
           </p>
@@ -132,7 +137,7 @@ export default function Partners() {
                 </h3>
 
                 <p className="mt-1 text-xs uppercase tracking-[0.2em] text-gray-400">
-                  Community Partner
+                  run collabarator
                 </p>
               </div>
             </div>

@@ -19,7 +19,7 @@ export default function Navbar({ onRegister }) {
     { name: "Gallery", to: "/gallery" },
     { name: "About", to: "/about" },
     { name: "Merch", to: "/merchandise" },
-    { name: "Partners", to: "/partners" },
+    { name: "Collaborations", to: "/partners" },
     { name: "FAQ", to: "/faq" },
   ];
 

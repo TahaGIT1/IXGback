@@ -4,8 +4,11 @@ import Order from "../models/Order.js";
 import crypto from "crypto";
 import Registration from "../models/Registration.js";
 import Run from "../models/Run.js";
-import { sendConfirmationEmail } from "../utils/sendEmail.js";
 import InviteCode from "../models/InviteCode.js";
+import {
+  sendConfirmationEmail,
+  sendOwnerNotification,
+} from "../utils/sendEmail.js";
 
 // Timing-safe comparison for Razorpay's HMAC signature.
 function isValidSignature(orderId, paymentId, signature) {
@@ -32,7 +35,7 @@ export const createOrder = async (req, res) => {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const amount = 59900;
+    const amount = 79900;
 
     const razorpayOrder = await razorpay.orders.create({
       amount,
@@ -73,7 +76,13 @@ export const verifyOrderPayment = async (req, res) => {
       orderId,
     } = req.body;
 
-    if (!isValidSignature(razorpay_order_id, razorpay_payment_id, razorpay_signature)) {
+    if (
+      !isValidSignature(
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature
+      )
+    ) {
       return res.status(400).json({
         success: false,
         message: "Payment verification failed.",
@@ -93,12 +102,38 @@ export const verifyOrderPayment = async (req, res) => {
     order.razorpayPaymentId = razorpay_payment_id;
     await order.save();
 
-    res.json({ success: true, order });
+    // Send customer email
+    try {
+      await sendConfirmationEmail(order.email, order.name, order);
+      console.log("✅ Customer email sent");
+    } catch (err) {
+      console.error("❌ Customer email failed");
+      console.error(err);
+    }
+
+    // Send owner email
+    try {
+      await sendOwnerNotification(order);
+      console.log("✅ Owner notification sent");
+    } catch (err) {
+      console.error("❌ Owner notification failed");
+      console.error(err);
+    }
+
+    res.json({
+      success: true,
+      order,
+    });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
-
 
 
 export const verifyPayment = async (req, res) => {

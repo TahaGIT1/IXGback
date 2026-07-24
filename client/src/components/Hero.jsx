@@ -58,7 +58,7 @@ export default function Hero() {
   </p>
 
   <p className="text-base leading-8 text-gray-500 sm:text-lg">
-    Leave with <span className="font-semibold text-gray-800">stronger legs</span>. Return with <span className="font-semibold text-gray-800">stronger friendships</span>. Join <span className="font-semibold text-gray-800">Belagavi's most welcoming running community</span> for relaxed runs, great coffee, and people you'll actually look forward to seeing again.
+    where you leave with <span className="font-semibold text-gray-800">stronger legs</span>. Return with <span className="font-semibold text-gray-800">stronger friendships</span>. Join <span className="font-semibold text-gray-800">Belagavi's most welcoming running community</span> for relaxed runs, great coffee, and people you'll actually look forward to seeing again.
   </p>
 </div>
 
@@ -121,7 +121,7 @@ export default function Hero() {
       <div>
         <div className="p-2.5 sm:p-4">
        <h3 className="text-lg font-black text-yellow-400 sm:text-2xl lg:text-3xl">
-  2500+
+  3000+
 </h3>
         <p className="mt-1 text-xs text-white sm:text-sm">
           Community Members

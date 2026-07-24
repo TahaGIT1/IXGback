@@ -4,29 +4,29 @@ import communityImage from "../assets/about.png";
 export default function WhyJoin() {
   const features = [
     {
-      icon: "🏃",
+      icon: "",
       title: "Beginner Friendly",
       description: "No one gets left behind",
     },
     {
-      icon: "☕",
+      icon: "",
       title: "Coffee & Community",
       description: "Every run ends with conversations",
     },
     {
-      icon: "🤝",
+      icon: "",
       title: "Meet Amazing People",
       description: "Students, professionals, and everyone in between",
     },
     {
-      icon: "🌅",
+      icon: "",
       title: "Explore Belagavi",
       description: "New routes, new corners of the city",
     },
   ];
 
   const stats = [
-    { value: "2500+", label: "Community Members" },
+    { value: "3000+", label: "Community Members" },
     { value: "6+", label: "Runs Hosted" },
     { value: "4 KM", label: "Beginner Friendly" },
     { value: "Sunday", label: "7:00 AM" },

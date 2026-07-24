@@ -1,11 +1,17 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  family: 4,           // force IPv4
+  connectionTimeout: 10000,  // fail fast if it can't connect
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
 
 export async function sendConfirmationEmail(email, name, run) {
@@ -37,4 +43,33 @@ export async function sendConfirmationEmail(email, name, run) {
   console.log(info.messageId);
 
   return info;
+}
+
+export async function sendOwnerNotification(order) {
+  const info = await transporter.sendMail({
+    from: `"IXG Run Club" <${process.env.EMAIL_USER}>`,
+    to: process.env.OWNER_EMAIL, // your email
+
+    subject: "🛍️ New Merchandise Order",
+
+    html: `
+      <h2>New Order Received</h2>
+
+      <p><b>Name:</b> ${order.name}</p>
+      <p><b>Email:</b> ${order.email}</p>
+      <p><b>Phone:</b> ${order.phone}</p>
+
+      <hr>
+
+      <p><b>Product:</b> ${order.product}</p>
+      <p><b>Size:</b> ${order.size}</p>
+      <p><b>Amount:</b> ₹${order.amount}</p>
+
+      <hr>
+
+      <p><b>Payment ID:</b> ${order.razorpayPaymentId}</p>
+    `,
+  });
+
+  console.log("✅ Owner email sent:", info.messageId);
 }
