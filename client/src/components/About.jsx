@@ -27,7 +27,7 @@ export default function WhyJoin() {
 
   const stats = [
     { value: "3000+", label: "Community Members" },
-    { value: "6+", label: "Runs Hosted" },
+    { value: "7+", label: "Runs Hosted" },
     { value: "4 KM", label: "Beginner Friendly" },
     { value: "Sunday", label: "7:00 AM" },
   ];

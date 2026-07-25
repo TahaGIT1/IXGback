@@ -136,9 +136,9 @@ export default function Partners() {
                   {partner.name}
                 </h3>
 
-                <p className="mt-1 text-xs uppercase tracking-[0.2em] text-gray-400">
-                  run collabarator
-                </p>
+                <p className="mt-1 text-xs uppercase tracking-wide sm:tracking-[0.2em] text-gray-400 whitespace-normal break-words">
+  run collaborator
+</p>
               </div>
             </div>
           ))}

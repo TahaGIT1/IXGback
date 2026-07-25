@@ -1,41 +1,52 @@
 import React from "react";
 import logo from "../assets/ixglogo.png";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Footer() {
+  const navigate = useNavigate();
+const location = useLocation();
+  
+
   const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Runs", href: "#runs" },
-    { name: "Gallery", href: "#gallery" },
-    { name: "Merchandise", href: "#merchandise" },
-    { name: "Brands that ran with us", href: "#sponsors" },
-  ];
+  { name: "Home", href: "#home", type: "scroll" },
+  { name: "Runs", href: "#runs", type: "scroll" },
+  { name: "Gallery", href: "/gallery", type: "route" },
+  { name: "Merchandise", href: "/merchandise", type: "route" },
+  { name: "Brands that ran with us", href: "/partners", type: "route" },
+];
+const communityLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/ixg_runclub?igsh=dnl0M2hzb25jd2x5",
+  },
+  {
+    name: "WhatsApp",
+    href: "https://chat.whatsapp.com/EX4eHkOuP9d8saoLDeCEOB",
+  },
+  {
+    name: "Strava",
+    href: "https://www.strava.com",
+  },
+];
 
-  const communityLinks = [
-    {
-      name: "Instagram",
-      href: "https://www.instagram.com/ixg_runclub?igsh=dnl0M2hzb25jd2x5",
-    },
-    {
-      name: "WhatsApp",
-      href: "https://chat.whatsapp.com/EX4eHkOuP9d8saoLDeCEOB",
-    },
-    {
-      name: "Strava",
-      href: "https://www.strava.com",
-    },
-  ];
+ const handleLinkClick = (e, link) => {
+  e.preventDefault(); // add this line, unconditionally, at the top
 
-  const handleScroll = (e, href) => {
-    e.preventDefault();
+  if (link.type === "route") {
+    navigate(link.href);
+    return;
+  }
 
-    const target = document.querySelector(href);
+  if (location.pathname !== "/") {
+    navigate("/");
+    setTimeout(() => {
+      document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+    return;
+  }
 
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-  };
+  document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+};
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -87,7 +98,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    onClick={(e) => handleScroll(e, link.href)}
+                   onClick={(e) => handleLinkClick(e, link)}
                     className="group inline-flex items-center text-sm text-white/60 transition-colors duration-200 hover:text-white"
                   >
                     <span className="mr-0 h-px w-0 bg-blue-700 transition-all duration-200 group-hover:mr-2 group-hover:w-3" />

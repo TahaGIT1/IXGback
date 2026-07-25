@@ -143,7 +143,7 @@ export default function Hero() {
       <div>
          <div className="p-2.5 sm:p-4">
        <h3 className="text-lg font-black text-yellow-400 sm:text-2xl lg:text-3xl">
-  6+
+  7+
 </h3>
         <p className="mt-1 text-xs text-white/80 sm:text-sm">
           Runs Hosted
