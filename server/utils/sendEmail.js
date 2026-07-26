@@ -54,7 +54,7 @@ export async function sendOwnerNotification(order) {
 
     html: `
       <h2>New Order Received</h2>
-
+    
       <p><b>Name:</b> ${order.name}</p>
       <p><b>Email:</b> ${order.email}</p>
       <p><b>Phone:</b> ${order.phone}</p>
