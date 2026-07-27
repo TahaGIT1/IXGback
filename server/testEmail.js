@@ -12,4 +12,3 @@ await sendConfirmationEmail(
   }
 );
 
-console.log("Finished");

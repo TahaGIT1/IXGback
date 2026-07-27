@@ -16,7 +16,7 @@ export default function Hero() {
        const res = await api.get("/api/runs");
         setNextRun(res.data[0]);
       } catch (error) {
-        console.error(error);
+        
       }
     };
 

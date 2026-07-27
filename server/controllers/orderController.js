@@ -59,7 +59,7 @@ export const createOrder = async (req, res) => {
       orderId: order._id,
     });
   } catch (error) {
-    console.error(error);
+   
 
     res.status(500).json({
       message: error.message,
@@ -105,19 +105,17 @@ export const verifyOrderPayment = async (req, res) => {
     // Send customer email
     try {
       await sendConfirmationEmail(order.email, order.name, order);
-      console.log("✅ Customer email sent");
+     
     } catch (err) {
-      console.error("❌ Customer email failed");
-      console.error(err);
+     
     }
 
     // Send owner email
     try {
       await sendOwnerNotification(order);
-      console.log("✅ Owner notification sent");
+    
     } catch (err) {
-      console.error("❌ Owner notification failed");
-      console.error(err);
+      
     }
 
     res.json({
@@ -126,7 +124,7 @@ export const verifyOrderPayment = async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error);
+   
 
     res.status(500).json({
       success: false,
@@ -138,7 +136,7 @@ export const verifyOrderPayment = async (req, res) => {
 
 export const verifyPayment = async (req, res) => {
   try {
-    console.log("========== VERIFY PAYMENT START ==========");
+   
 
     const {
       razorpay_order_id,
@@ -147,7 +145,7 @@ export const verifyPayment = async (req, res) => {
       registrationId,
     } = req.body;
 
-    console.log("1️⃣ Request received");
+    
 
     if (!registrationId) {
       return res.status(400).json({
@@ -156,7 +154,7 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("2️⃣ Registration ID OK");
+   
 
     if (
       !isValidSignature(
@@ -171,11 +169,11 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("3️⃣ Signature verified");
+    
 
     const existingRegistration = await Registration.findById(registrationId);
 
-    console.log("4️⃣ Registration fetched");
+    
 
     if (!existingRegistration) {
       return res.status(404).json({
@@ -191,10 +189,10 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("5️⃣ Registration validated");
+    
 
     if (existingRegistration.paymentStatus === "Paid") {
-      console.log("Already verified");
+      
 
       return res.status(200).json({
         success: true,
@@ -210,23 +208,24 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("6️⃣ Updating registration...");
+    
 
-    const registration = await Registration.findOneAndUpdate(
-      {
-        _id: registrationId,
-        paymentStatus: "Pending",
-      },
-      {
-        paymentStatus: "Paid",
-        razorpayPaymentId: razorpay_payment_id,
-      },
-      {
-        new: true,
-      }
-    );
+   const registration = await Registration.findOneAndUpdate(
+  {
+    _id: registrationId,
+    paymentStatus: "Pending",
+  },
+  {
+    paymentStatus: "Paid",
+    razorpayPaymentId: razorpay_payment_id,
+    emailSent: false,
+  },
+  {
+    new: true,
+  }
+);
 
-    console.log("7️⃣ Registration updated");
+   
 
     if (!registration) {
       return res.status(200).json({
@@ -235,7 +234,7 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    console.log("8️⃣ Updating run...");
+    
 
     const run = await Run.findByIdAndUpdate(
       registration.run,
@@ -247,7 +246,7 @@ export const verifyPayment = async (req, res) => {
       }
     );
 
-    console.log("9️⃣ Run updated");
+   
 
     if (!run) {
       return res.status(404).json({
@@ -257,8 +256,7 @@ export const verifyPayment = async (req, res) => {
     }
 
     if (registration.inviteCode) {
-      console.log("🔟 Updating invite...");
-
+      
       await InviteCode.findByIdAndUpdate(
         registration.inviteCode,
         {
@@ -268,19 +266,19 @@ export const verifyPayment = async (req, res) => {
         }
       );
 
-      console.log("1️⃣1️⃣ Invite updated");
+     
     }
 
-    console.log("1️⃣2️⃣ Sending response to frontend...");
+   
 
     res.status(200).json({
       success: true,
       message: "Payment verified successfully.",
       registration,
     });
-    console.log("➡ About to call sendConfirmationEmail");
+    
 
-    console.log("1️⃣3️⃣ Response sent");
+    
 
    try {
   await sendConfirmationEmail(
@@ -288,19 +286,14 @@ export const verifyPayment = async (req, res) => {
     registration.name,
     run
   );
-  console.log("✅ sendConfirmationEmail finished");
-
-  console.log("✅ Email sent successfully");
+  
 } catch (err) {
-  console.error("❌ Email failed");
-  console.error(err);
+ 
 }
 
-    console.log("========== VERIFY PAYMENT END ==========");
+  
   } catch (error) {
-    console.error("❌ VERIFY PAYMENT ERROR");
-    console.error(error);
-
+   
     res.status(500).json({
       success: false,
       message: error.message,

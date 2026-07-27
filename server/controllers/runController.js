@@ -39,7 +39,7 @@ export const deleteRun = async (req, res) => {
       message: "Run and its registrations deleted successfully",
     });
   } catch (error) {
-    console.error(error);
+    
 
     res.status(500).json({
       message: error.message,

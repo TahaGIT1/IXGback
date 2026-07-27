@@ -13,14 +13,14 @@ export default function Login() {
 
   const handleLogin = async (e) => {
   e.preventDefault();
-  console.log("Button clicked");
+  
 
   try {
     const res = await api.post("/api/auth/login", {
       password,
     });
 
-    console.log(res.data);
+    
 
     localStorage.setItem("token", res.data.token);
 
@@ -30,8 +30,7 @@ export default function Login() {
       window.location.href = "/admin";
     }, 800);
   } catch (error) {
-    console.log("Login failed");
-    console.log(error);
+    
 
     toast.error("Invalid password");
   }

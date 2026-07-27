@@ -18,7 +18,7 @@ const nextOpenRun = runs.find((item) => item.registrationOpen);
 
 setRun(nextOpenRun || null);
     } catch (error) {
-      console.error("Error fetching run:", error);
+      
     }
   };
 

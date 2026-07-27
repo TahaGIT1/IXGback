@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendConfirmationEmail(email, name, run) {
-  console.log("📧 sendConfirmationEmail() started");
+  
 
   const mailOptions = {
     from: `"IXG Run Club" <${process.env.EMAIL_USER}>`,
@@ -35,12 +35,9 @@ export async function sendConfirmationEmail(email, name, run) {
     `,
   };
 
-  console.log("📧 About to call transporter.sendMail()");
+ 
 
   const info = await transporter.sendMail(mailOptions);
-
-  console.log("📧 transporter.sendMail() finished");
-  console.log(info.messageId);
 
   return info;
 }
@@ -54,7 +51,7 @@ export async function sendOwnerNotification(order) {
 
     html: `
       <h2>New Order Received</h2>
-    
+
       <p><b>Name:</b> ${order.name}</p>
       <p><b>Email:</b> ${order.email}</p>
       <p><b>Phone:</b> ${order.phone}</p>
@@ -71,5 +68,5 @@ export async function sendOwnerNotification(order) {
     `,
   });
 
-  console.log("✅ Owner email sent:", info.messageId);
+  
 }

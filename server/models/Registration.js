@@ -32,10 +32,10 @@ const registrationSchema = new mongoose.Schema(
       required: true,
     },
 
-inviteCode: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: "InviteCode",
-},
+    inviteCode: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "InviteCode",
+    },
 
     paymentStatus: {
       type: String,
@@ -45,6 +45,12 @@ inviteCode: {
 
     razorpayOrderId: String,
     razorpayPaymentId: String,
+
+    // 👇 Add it here
+    emailSent: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

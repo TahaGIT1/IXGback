@@ -133,7 +133,7 @@ const [inviteLoading, setInviteLoading] = useState(false);
         }))
       );
     } catch (error) {
-      console.error(error);
+      
       showStatus("error", "Couldn't load runs. Please refresh.");
     } finally {
       setRunsLoading(false);
@@ -157,7 +157,7 @@ const [inviteLoading, setInviteLoading] = useState(false);
 
         setRegistrations(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
-        console.error(error);
+       
 
         if (error.response?.status === 401) {
           handleAuthFailure();
@@ -179,7 +179,7 @@ const [inviteLoading, setInviteLoading] = useState(false);
     setInviteCodes(res.data);
 
   } catch (error) {
-    console.error(error);
+    
 
     showStatus("error", "Failed to load invite codes.");
   }
@@ -207,7 +207,7 @@ const filteredInviteCodes = useMemo(() => {
 
     showStatus("success", `${inviteQuantity} invite codes generated.`);
   } catch (error) {
-    console.error(error);
+    
 
     showStatus("error", "Failed to generate invite codes.");
   } finally {
@@ -221,8 +221,7 @@ const copyCode = async (code) => {
 
     showStatus("success", "Invite code copied.");
   } catch (error) {
-    console.error(error);
-
+    
     showStatus("error", "Failed to copy code.");
   }
 };
@@ -345,7 +344,7 @@ const copyCode = async (code) => {
       await fetchRuns();
       handleCancelEdit();
     } catch (error) {
-      console.error(error);
+      
       showStatus("error", "Failed to save run.");
     } finally {
       setSubmitting(false);
@@ -411,7 +410,7 @@ const copyCode = async (code) => {
       await fetchRuns();
       showStatus("success", "Run and its registrations deleted successfully.");
     } catch (error) {
-      console.error(error);
+      
       showStatus("error", "Failed to delete run.");
     } finally {
       setDeletingRunId(null);
@@ -434,7 +433,7 @@ const copyCode = async (code) => {
 
       showStatus("success", "Registration deleted.");
     } catch (error) {
-      console.error(error);
+      
       showStatus("error", "Failed to delete registration.");
     } finally {
       setDeletingRegistrationId(null);

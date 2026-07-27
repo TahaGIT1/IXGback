@@ -44,7 +44,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           setSelectedRunId("");
         }
       } catch (error) {
-        console.error(error);
+        
         toast.error("Could not load available runs.");
       } finally {
         setCheckingRegistration(false);
@@ -151,9 +151,7 @@ export default function RegisterModal({ isOpen, onClose }) {
 
     handler: async function (response) {
   try {
-    console.time("VERIFY REQUEST");
-
-    console.log("1. Razorpay success");
+   
 
     const verifyRes = await api.post("/api/register/verify", {
       razorpay_order_id: response.razorpay_order_id,
@@ -162,15 +160,6 @@ export default function RegisterModal({ isOpen, onClose }) {
       registrationId: registration._id,
     });
 
-    console.timeEnd("VERIFY REQUEST");
-
-    console.log("2. Verify response");
-    console.log(verifyRes.data);
-
-    console.timeEnd("VERIFY REQUEST");
-
-    console.log("2. Verify response");
-    console.log(verifyRes.data);
 
     setConfirmation({
       name: formData.name,
@@ -186,10 +175,10 @@ export default function RegisterModal({ isOpen, onClose }) {
       inviteCode: "",
     });
 
-    console.log("SHOWING SUCCESS MODAL");
+   
     setShowSuccessModal(true);
   } catch (error) {
-    console.error(error);
+    
     toast.error("Payment verification failed.");
   } finally {
     setLoading(false);
@@ -207,7 +196,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error(error);
+      
       toast.error(
         error.response?.data?.message || "Failed to start payment."
       );

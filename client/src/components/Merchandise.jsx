@@ -85,12 +85,12 @@ handler: async function (response) {
         phone: "",
       });
 
-      console.log("Payment Verified ✅");
+      
     } else {
       toast.error("Payment verification failed.");
     }
   } catch (error) {
-    console.error("Verification Error:", error.response?.data || error);
+    
     toast.error("Payment verification failed.");
   }
 },
@@ -103,7 +103,7 @@ const razorpay = new window.Razorpay(options);
 razorpay.open();
 setLoading(false);   
   } catch (error) {
-    console.error(error);
+  
     toast.error("Unable to start payment.");
     setLoading(false);   // ← add this line
   }

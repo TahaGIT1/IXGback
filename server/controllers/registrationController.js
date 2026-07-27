@@ -110,7 +110,7 @@ if (!invite) {
       order: razorpayOrder,
     });
   } catch (error) {
-    console.error("Registration error:", error);
+    
 
     res.status(500).json({
       message: "Could not create registration.",
@@ -141,7 +141,7 @@ export const getRegistrations = async (req, res) => {
 
     res.status(200).json(registrations);
   } catch (error) {
-    console.error("Get registrations error:", error);
+    
 
     res.status(500).json({
       message: "Could not load registrations.",
@@ -169,8 +169,7 @@ export const deleteRegistration = async (req, res) => {
       message: "Registration deleted successfully.",
     });
   } catch (error) {
-    console.error("Delete registration error:", error);
-
+    
     res.status(500).json({
       message: "Could not delete registration.",
     });

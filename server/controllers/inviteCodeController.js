@@ -57,7 +57,7 @@ export const generateInviteCodes = async (req, res) => {
       message: `${qty} invite codes generated.`,
     });
   } catch (error) {
-    console.error(error);
+   
 
     res.status(500).json({
       message: error.message,
@@ -76,7 +76,7 @@ export const getInviteCodes = async (req, res) => {
 
     res.status(200).json(codes);
   } catch (error) {
-    console.error(error);
+    
 
     res.status(500).json({
       message: error.message,
