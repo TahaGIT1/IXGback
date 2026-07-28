@@ -91,7 +91,27 @@ if (!invite) {
  receipt: `run_${run._id.toString().slice(-8)}_${Date.now().toString().slice(-6)}`,
 });
 
-    const registration = await Registration.create({
+   let registration = await Registration.findOne({
+  run: run._id,
+  paymentStatus: "Pending",
+  $or: [
+    { email: email.trim().toLowerCase() },
+    { phone: String(phone) },
+  ],
+});
+
+if (registration) {
+  // User already has a pending registration.
+  // Update it with the latest Razorpay order and details.
+  registration.name = name.trim();
+  registration.phone = String(phone);
+  registration.age = Number(age);
+  registration.inviteCode = invite._id;
+  registration.razorpayOrderId = razorpayOrder.id;
+
+  await registration.save();
+} else {
+  registration = await Registration.create({
     run: run._id,
     name: name.trim(),
     phone: String(phone),
@@ -99,9 +119,9 @@ if (!invite) {
     age: Number(age),
     paymentStatus: "Pending",
     razorpayOrderId: razorpayOrder.id,
-
     inviteCode: invite._id,
-});
+  });
+}
 
 
 
@@ -123,7 +143,9 @@ if (!invite) {
 export const getRegistrations = async (req, res) => {
   try {
     const { runId } = req.query;
-    const filter = {};
+    const filter = {
+  paymentStatus: "Paid",
+};
 
     if (runId) {
       if (!mongoose.Types.ObjectId.isValid(runId)) {
