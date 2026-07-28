@@ -86,7 +86,7 @@ if (!invite) {
  
 
     const razorpayOrder = await razorpay.orders.create({
-  amount: 14900,
+  amount: 100,
   currency: "INR",
  receipt: `run_${run._id.toString().slice(-8)}_${Date.now().toString().slice(-6)}`,
 });
