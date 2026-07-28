@@ -132,7 +132,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       );
 
       const options = {
-        key: "rzp_test_TEwYR3CV4dUmLp",
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         name: "IXG Run Club",
@@ -192,7 +192,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           },
         },
       };
-
+console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {

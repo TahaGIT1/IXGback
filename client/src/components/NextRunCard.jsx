@@ -86,7 +86,7 @@ export default function NextRunCard({
   </p>
 </div>
 
-       <p className="mt-3 text-base text-gray-500">
+       <p className="mt-3 text-base text-blue-800">
           
           {peopleGoing} People have registered
         </p>

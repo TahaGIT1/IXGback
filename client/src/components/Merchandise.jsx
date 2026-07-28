@@ -46,7 +46,7 @@ setLoading(true);
 );
 
     const options = {
-  key: "rzp_test_TEwYR3CV4dUmLp",
+  key: import.meta.env.VITE_RAZORPAY_KEY_ID,
   amount: order.amount,
   currency: order.currency,
   name: "IXG Run Club",
@@ -123,7 +123,7 @@ const sizes = ["S", "M", "L", "XL"];
     {
       name: "IXG Hoodie",
       description: "Soft fleece for post-run coffee runs.",
-      price: 1299,
+      price: 1399,
       rating: 5,
       image: hoodie,
       isNew: false,
