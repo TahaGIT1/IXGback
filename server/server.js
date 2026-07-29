@@ -22,6 +22,13 @@ app.use("/api/register", registrationRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/invite", inviteCodeRoutes);
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    uptime: process.uptime(),
+    timestamp: new Date(),
+  });
+});
 
 
 // Test Route
