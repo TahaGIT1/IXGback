@@ -46,6 +46,48 @@ const registrationSchema = new mongoose.Schema(
     razorpayOrderId: String,
     razorpayPaymentId: String,
 
+    // Stored in rupees. Older registrations may not have this value, so the
+    // recovery service falls back to the configured legacy registration price.
+    paymentAmount: {
+      type: Number,
+      min: 0,
+    },
+
+    recoveryStatus: {
+      type: String,
+      enum: ["None", "Identified", "Contacted", "Recovered", "Ignored"],
+      default: "None",
+      index: true,
+    },
+
+    recoveryPriority: {
+      type: String,
+      enum: ["HIGH", "MEDIUM", "LOW"],
+    },
+
+    recoveryScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+    },
+
+    recoveryAttempts: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+
+    lastRecoveryAttemptAt: Date,
+    recoveredAt: Date,
+    recoveryMessage: String,
+    recoveryReason: String,
+
+    recoveryMetadata: {
+      analyzedAt: Date,
+      reason: String,
+      recommendedAction: String,
+    },
+
     // 👇 Add it here
     emailSent: {
       type: Boolean,

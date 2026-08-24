@@ -108,6 +108,7 @@ if (registration) {
   registration.age = Number(age);
   registration.inviteCode = invite._id;
   registration.razorpayOrderId = razorpayOrder.id;
+  registration.paymentAmount = razorpayOrder.amount / 100;
 
   await registration.save();
 } else {
@@ -119,6 +120,7 @@ if (registration) {
     age: Number(age),
     paymentStatus: "Pending",
     razorpayOrderId: razorpayOrder.id,
+    paymentAmount: razorpayOrder.amount / 100,
     inviteCode: invite._id,
   });
 }

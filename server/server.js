@@ -8,6 +8,7 @@ import registrationRoutes from "./routes/registrationRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import inviteCodeRoutes from "./routes/inviteCodeRoutes.js";
+import recoveryRoutes from "./routes/recoveryRoutes.js";
 
 // Connect to MongoDB
 connectDB();
@@ -22,6 +23,7 @@ app.use("/api/register", registrationRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/invite", inviteCodeRoutes);
+app.use("/api/ai/recovery", recoveryRoutes);
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "OK",

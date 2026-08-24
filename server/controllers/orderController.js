@@ -5,6 +5,7 @@ import crypto from "crypto";
 import Registration from "../models/Registration.js";
 import Run from "../models/Run.js";
 import InviteCode from "../models/InviteCode.js";
+import { markRecoveryAsPaid } from "../services/recoveryService.js";
 import {
   sendConfirmationEmail,
   sendOwnerNotification,
@@ -233,6 +234,10 @@ export const verifyPayment = async (req, res) => {
         message: "Payment was already verified.",
       });
     }
+
+    // Recovery data is informational only. Razorpay HMAC verification above is
+    // the sole authority allowed to mark a registration as paid.
+    await markRecoveryAsPaid(registration);
 
     
 

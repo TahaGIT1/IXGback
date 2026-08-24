@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendConfirmationEmail(email, name, run) {
-  
+
 
   const mailOptions = {
     from: `"IXG Run Club" <${process.env.EMAIL_USER}>`,
@@ -69,4 +69,21 @@ export async function sendOwnerNotification(order) {
   });
 
   
+}
+
+export async function sendRecoveryEmail(registration, run) {
+  const subject = `Complete your IXG Run Club registration`;
+  return transporter.sendMail({
+    from: `"IXG Run Club" <${process.env.EMAIL_USER}>`,
+    to: registration.email,
+    subject,
+    html: `
+      <h2>Hey ${registration.name} 👋</h2>
+      <p>${String(registration.recoveryMessage || "Your run registration is waiting for payment.").replace(/\n/g, "<br />")}</p>
+      <p><b>Run:</b> ${run.title}</p>
+      <p><b>Date:</b> ${run.date} at ${run.time}</p>
+      <p><b>Payment amount:</b> ₹${registration.paymentAmount ?? process.env.RUN_REGISTRATION_AMOUNT ?? 1}</p>
+      <p>Please return to the IXG Run Club registration page to complete payment securely.</p>
+    `,
+  });
 }
