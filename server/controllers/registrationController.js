@@ -1,13 +1,8 @@
 import mongoose from "mongoose";
 import Registration from "../models/Registration.js";
 import Run from "../models/Run.js";
-import Razorpay from "razorpay";
 import InviteCode from "../models/InviteCode.js";
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+import { sendConfirmationEmail } from "../utils/sendEmail.js";
 
 // Create a registration for one specific run.
 export const registerRunner = async (req, res) => {
@@ -50,23 +45,26 @@ export const registerRunner = async (req, res) => {
         message: "Age must be between 10 and 100.",
       });
     }
-if (!inviteCode?.trim()) {
-  return res.status(400).json({
-    message: "Invite code is required.",
+// if (!inviteCode?.trim()) {
+//   return res.status(400).json({
+//     message: "Invite code is required.",
+//   });
+// }
+
+let invite = null;
+
+if (inviteCode?.trim()) {
+  invite = await InviteCode.findOne({
+    code: inviteCode.trim().toUpperCase(),
+    runId,
+    status: "Available",
   });
-}
 
-const invite = await InviteCode.findOne({
-  code: inviteCode.trim().toUpperCase(),
-  runId,
-  status: "Available",
-});
-
-
-if (!invite) {
-  return res.status(400).json({
-    message: "Invalid , Unavailable or already used invite code.",
-  });
+  if (!invite) {
+    return res.status(400).json({
+      message: "Invalid, unavailable or already used invite code.",
+    });
+  }
 }
     /*
       This is important:
@@ -85,52 +83,36 @@ if (!invite) {
     }
  
 
-    const razorpayOrder = await razorpay.orders.create({
-  amount: 100,
-  currency: "INR",
- receipt: `run_${run._id.toString().slice(-8)}_${Date.now().toString().slice(-6)}`,
-});
-
-   let registration = await Registration.findOne({
+    const registration = await Registration.create({
   run: run._id,
-  paymentStatus: "Pending",
-  $or: [
-    { email: email.trim().toLowerCase() },
-    { phone: String(phone) },
-  ],
+  name: name.trim(),
+  phone: String(phone),
+  email: email.trim().toLowerCase(),
+  age: Number(age),
+  paymentStatus: "Paid",
+  inviteCode: invite?._id || null,
+  emailSent: false,
 });
 
-if (registration) {
-  // User already has a pending registration.
-  // Update it with the latest Razorpay order and details.
-  registration.name = name.trim();
-  registration.phone = String(phone);
-  registration.age = Number(age);
-  registration.inviteCode = invite._id;
-  registration.razorpayOrderId = razorpayOrder.id;
-  registration.paymentAmount = razorpayOrder.amount / 100;
-
-  await registration.save();
-} else {
-  registration = await Registration.create({
-    run: run._id,
-    name: name.trim(),
-    phone: String(phone),
-    email: email.trim().toLowerCase(),
-    age: Number(age),
-    paymentStatus: "Pending",
-    razorpayOrderId: razorpayOrder.id,
-    paymentAmount: razorpayOrder.amount / 100,
-    inviteCode: invite._id,
+    await Run.findByIdAndUpdate(run._id, { $inc: { registered: 1 } });
+    if (invite) {
+  await InviteCode.findByIdAndUpdate(invite._id, {
+    status: "Used",
+    usedAt: new Date(),
+    usedBy: registration._id,
   });
 }
 
+    // A confirmation-email failure must never undo a completed free registration.
+    try {
+      await sendConfirmationEmail(registration.email, registration.name, run);
+      registration.emailSent = true;
+      await registration.save();
+    } catch {
+      // The existing pending-email utility can retry this later.
+    }
 
-
-    res.status(201).json({
-      registration,
-      order: razorpayOrder,
-    });
+    res.status(201).json({ registration, run });
   } catch (error) {
     
 
