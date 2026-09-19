@@ -121,7 +121,7 @@ export default function Hero() {
       <div>
         <div className="p-2.5 sm:p-4">
        <h3 className="text-lg font-black text-yellow-400 sm:text-2xl lg:text-3xl">
-  3000+
+  4000+
 </h3>
         <p className="mt-1 text-xs text-white sm:text-sm">
           Community Members
@@ -132,7 +132,7 @@ export default function Hero() {
       <div>
          <div className="p-2.5 sm:p-4">
         <h3 className="text-lg font-black text-yellow-400 sm:text-2xl lg:text-3xl">
-  4 KM
+  5 KM
 </h3>
         <p className="mt-1 text-xs text-white/80 sm:text-sm">
           Beginner Friendly
@@ -143,7 +143,7 @@ export default function Hero() {
       <div>
          <div className="p-2.5 sm:p-4">
        <h3 className="text-lg font-black text-yellow-400 sm:text-2xl lg:text-3xl">
-  7+
+  14+
 </h3>
         <p className="mt-1 text-xs text-white/80 sm:text-sm">
           Runs Hosted

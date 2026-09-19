@@ -71,9 +71,9 @@ export default function RegisterModal({ isOpen, onClose }) {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.inviteCode.trim()) {
-  newErrors.inviteCode = "Invite code is required.";
-}
+//     if (!formData.inviteCode.trim()) {
+//   newErrors.inviteCode = "Invite code is required.";
+// }
 
     if (!selectedRunId) {
       newErrors.runId = "Please select a run.";
@@ -117,7 +117,7 @@ export default function RegisterModal({ isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const { data } = await api.post(
+      await api.post(
         "/api/register",
         {
           ...formData,
@@ -125,80 +125,26 @@ export default function RegisterModal({ isOpen, onClose }) {
         }
       );
 
-      const { registration, order } = data;
-
       const selectedRun = runs.find(
         (run) => run._id === selectedRunId
       );
+      setConfirmation({
+        name: formData.name,
+        runTitle: selectedRun?.title || "Community Run",
+      });
 
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        amount: order.amount,
-        currency: order.currency,
-        name: "IXG Run Club",
-        description: selectedRun?.title || "Community Run",
-        order_id: order.id,
-
-        prefill: {
-          name: formData.name,
-          email: formData.email,
-          contact: formData.phone,
-        },
-
-        theme: {
-          color: "#1E40AF",
-        },
-
-    handler: async function (response) {
-  try {
-   
-
-    const verifyRes = await api.post("/api/register/verify", {
-      razorpay_order_id: response.razorpay_order_id,
-      razorpay_payment_id: response.razorpay_payment_id,
-      razorpay_signature: response.razorpay_signature,
-      registrationId: registration._id,
-    });
-
-
-    setConfirmation({
-      name: formData.name,
-      amount: order.amount / 100,
-      runTitle: selectedRun?.title || "Community Run",
-    });
-
-    setFormData({
-      name: "",
-      phone: "",
-      email: "",
-      age: "",
-      inviteCode: "",
-    });
-
-   
-    setShowSuccessModal(true);
-  } catch (error) {
-    
-    toast.error("Payment verification failed.");
-  } finally {
-    setLoading(false);
-  }
-},
-
-        modal: {
-          ondismiss: function () {
-            setLoading(false);
-            toast.error("Payment cancelled. Registration not completed.");
-          },
-        },
-      };
-console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        age: "",
+        inviteCode: "",
+      });
+      setShowSuccessModal(true);
     } catch (error) {
       
       toast.error(
-        error.response?.data?.message || "Failed to start payment."
+        error.response?.data?.message || "Could not complete registration."
       );
       setLoading(false);
     }
@@ -239,12 +185,6 @@ console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
               </span>
             </div>
 
-            <div className="mt-3 flex justify-between">
-              <span className="text-gray-500">Amount Paid</span>
-              <span className="font-bold">
-                ₹{confirmation?.amount}
-              </span>
-            </div>
           </div>
 
           <button
@@ -348,7 +288,7 @@ console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
   <input
     type="text"
     name="inviteCode"
-    placeholder="Invite Code"
+    placeholder="Invite Code(optional)"
     value={formData.inviteCode}
     onChange={handleChange}
     className="w-full rounded-xl border p-3"
@@ -366,7 +306,7 @@ console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID);
               disabled={loading}
               className="w-full rounded-lg bg-blue-800 py-3 font-semibold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {loading ? "Waiting for Confirmation..." : "Pay & Register"}
+              {loading ? "Registering..." : "Register for Free"}
             </button>
           </form>
         )}
