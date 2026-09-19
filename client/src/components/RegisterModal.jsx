@@ -44,7 +44,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           setSelectedRunId("");
         }
       } catch (error) {
-        
+
         toast.error("Could not load available runs.");
       } finally {
         setCheckingRegistration(false);
@@ -68,12 +68,20 @@ export default function RegisterModal({ isOpen, onClose }) {
     }));
   };
 
+  const handleRunChange = (e) => {
+    setSelectedRunId(e.target.value);
+    setErrors((prev) => ({
+      ...prev,
+      runId: "",
+    }));
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
-//     if (!formData.inviteCode.trim()) {
-//   newErrors.inviteCode = "Invite code is required.";
-// }
+    //     if (!formData.inviteCode.trim()) {
+    //   newErrors.inviteCode = "Invite code is required.";
+    // }
 
     if (!selectedRunId) {
       newErrors.runId = "Please select a run.";
@@ -142,7 +150,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       });
       setShowSuccessModal(true);
     } catch (error) {
-      
+
       toast.error(
         error.response?.data?.message || "Could not complete registration."
       );
@@ -184,7 +192,6 @@ export default function RegisterModal({ isOpen, onClose }) {
                 {confirmation?.name}
               </span>
             </div>
-
           </div>
 
           <button
@@ -218,7 +225,27 @@ export default function RegisterModal({ isOpen, onClose }) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-            
+            {runs.length > 1 && (
+              <div>
+                <select
+                  name="runId"
+                  value={selectedRunId}
+                  onChange={handleRunChange}
+                  className="w-full rounded-lg border p-3"
+                >
+                  {runs.map((run) => (
+                    <option key={run._id} value={run._id}>
+                      {run.title}
+                    </option>
+                  ))}
+                </select>
+                {errors.runId && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.runId}
+                  </p>
+                )}
+              </div>
+            )}
 
             <div>
               <input
@@ -284,22 +311,34 @@ export default function RegisterModal({ isOpen, onClose }) {
               )}
             </div>
 
-           <div>
-  <input
-    type="text"
-    name="inviteCode"
-    placeholder="Invite Code(optional)"
-    value={formData.inviteCode}
-    onChange={handleChange}
-    className="w-full rounded-xl border p-3"
-  />
+            <div>
+              <input
+                type="text"
+                name="inviteCode"
+                placeholder="Invite Code (Optional)"
+                value={formData.inviteCode}
+                onChange={handleChange}
+                className="w-full rounded-xl border p-3"
+              />
 
-  {errors.inviteCode && (
-    <p className="mt-1 text-sm text-red-500">
-      {errors.inviteCode}
-    </p>
-  )}
-</div>
+              {errors.inviteCode && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.inviteCode}
+                </p>
+              )}
+
+              <div className="mt-3 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                <p className="text-sm font-semibold text-gray-900">
+                  Exclusive IXG Member Benefits
+                </p>
+
+                <div className="mt-2 space-y-1.5 text-sm text-gray-600">
+                  <p>Complimentary Breakfast</p>
+                  <p> Free T-Shirt</p>
+                  <p> Live Music & DJ</p>
+                </div>
+              </div>
+            </div>
 
             <button
               type="submit"
