@@ -335,7 +335,7 @@ export default function RegisterModal({ isOpen, onClose }) {
                 <div className="mt-2 space-y-1.5 text-sm text-gray-600">
                   <p>Complimentary Breakfast</p>
                   <p> Free T-Shirt</p>
-                  <p> Live Music & DJ</p>
+                 
                 </div>
               </div>
             </div>
